@@ -108,6 +108,11 @@ Configure o formato de exibição, tamanho, animações de entrada/saída e test
 Ative, ajuste o volume e envie áudios personalizados para compras, vendas, dragões, Barão, Arauto, torres, multikills e alertas de vantagem inimiga.
 ![Configurações de Áudio e Sons](./docs/images/04-audio-sons.jpg)
 
+### Compra de Itens em Tempo Real no Jogo
+Exemplo funcionando ao vivo durante uma partida de League of Legends com o ícone do item comprado aparecendo sobre o jogo via Browser Source no OBS.
+![Compra de Item na Loja do Jogo](./docs/images/05-ingame-compra-loja.jpg)
+![Ícone do Item Comprado na Tela do Jogo](./docs/images/06-ingame-compra-overlay.jpg)
+
 ---
 
 ## 🛠️ Estrutura do Projeto
