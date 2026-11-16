@@ -8,7 +8,8 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "start:open": "node dist/server.js --open"
+    "start:open": "node dist/server.js --open",
+    "package": "powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1"
   },
   "dependencies": {
     "express": "^5.1.0",

@@ -35,10 +35,13 @@
 - Instale o **Node.js (versão LTS)** em [nodejs.org](https://nodejs.org/).
 
 ### 2. Baixar o Projeto
-- **Opção A — Download direto (ZIP):**
+- **Opção A — Release Pronta para Executar (Recomendado):**
+  1. Acesse [**Releases no GitHub**](https://github.com/Rogerio-Viana/OverlayLeagueBot/releases/latest) e baixe o arquivo **`OverlayLeagueBot-v...-win.zip`**.
+  2. Extraia o ZIP em uma pasta (ex: `C:\OverlayLeagueBot`). *(Este pacote já vem compilado e com as dependências incluídas para abrir instantaneamente!)*
+- **Opção B — Código-fonte (ZIP):**
   1. No repositório do GitHub, clique no botão verde **`<> Code`** → **`Download ZIP`**.
   2. Extraia o arquivo ZIP em uma pasta de sua preferência (ex: `C:\OverlayLeagueBot`).
-- **Opção B — Via Git:**
+- **Opção C — Via Git:**
   ```bash
   git clone https://github.com/Rogerio-Viana/OverlayLeagueBot.git
   cd OverlayLeagueBot

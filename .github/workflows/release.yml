@@ -1,0 +1,62 @@
+name: Build & Publish Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag da release (ex: v0.1.0)'
+        required: true
+        default: 'v0.1.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Prepare portable release package
+        shell: pwsh
+        run: |
+          $tag = if ("${{ github.event.inputs.tag }}" -ne "") { "${{ github.event.inputs.tag }}" } else { "${{ github.ref_name }}" }
+          $stage = "release-stage/OverlayLeagueBot"
+          New-Item -ItemType Directory -Force -Path $stage | Out-Null
+
+          Copy-Item -Recurse -Force "dist" "$stage/dist"
+          Copy-Item -Recurse -Force "public" "$stage/public"
+          Copy-Item -Force "package.json", "package-lock.json", "Iniciar-OverlayLeagueBot.bat", "README.md" "$stage/"
+
+          Push-Location $stage
+          npm ci --omit=dev
+          Pop-Location
+
+          New-Item -ItemType Directory -Force -Path "release" | Out-Null
+          $zipPath = "release/OverlayLeagueBot-$tag-win.zip"
+          Compress-Archive -Path "$stage/*" -DestinationPath $zipPath -Force
+          echo "RELEASE_TAG=$tag" >> $env:GITHUB_ENV
+          echo "ZIP_PATH=$zipPath" >> $env:GITHUB_ENV
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: OverlayLeagueBot ${{ env.RELEASE_TAG }}
+          generate_release_notes: true
+          files: ${{ env.ZIP_PATH }}
