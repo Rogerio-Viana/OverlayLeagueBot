@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoL OBS Overlay</title>
+  <link rel="stylesheet" href="/overlay.css" />
+</head>
+<body>
+  <div id="overlay-root" class="overlay-root hidden">
+    <!-- Event Toast Banner -->
+    <div id="event-banner" class="event-banner hidden">
+      <div id="event-banner-icon" class="event-toast-icon" style="--event-toast-size: 40px; padding: 4px;"></div>
+      <div class="event-text">
+        <div id="event-title" class="event-title">FIRST BLOOD</div>
+        <div id="event-subtitle" class="event-subtitle"></div>
+      </div>
+    </div>
+
+    <!-- Item Purchase / Sale Toast -->
+    <div id="item-toast" class="item-toast icon-only hidden">
+      <div class="item-toast-icon-wrap">
+        <img id="item-toast-icon" class="item-toast-icon" src="" alt="Item" />
+        <span id="item-toast-gold" class="item-toast-gold hidden">+0g</span>
+      </div>
+      <div id="item-toast-text" class="event-text">
+        <div id="item-toast-label" class="item-toast-label">ITEM COMPRADO</div>
+        <div id="item-toast-name" class="item-toast-name"></div>
+      </div>
+    </div>
+
+    <!-- Streamer HUD Card -->
+    <div id="hud-card" class="hud-card">
+      <div class="champ-wrap">
+        <img id="champ-icon" class="champ-icon" src="" alt="Champion" />
+        <span id="champ-level" class="champ-level">1</span>
+        <div id="dead-badge" class="dead-badge hidden">
+          <span id="respawn-timer">0s</span>
+        </div>
+      </div>
+
+      <div class="player-info">
+        <div class="top-row">
+          <span id="riot-id" class="riot-id">Player#BR1</span>
+          <span id="game-timer" class="game-timer">00:00</span>
+        </div>
+
+        <div class="stats-row">
+          <div id="stat-kills" class="stat-pill">
+            <span class="label">ABATES</span>
+            <span id="kills-value" class="value">0</span>
+          </div>
+          <div id="stat-deaths" class="stat-pill">
+            <span class="label">MORTES</span>
+            <span id="deaths-value" class="value">0</span>
+          </div>
+          <div id="stat-assists" class="stat-pill">
+            <span class="label">ASSIST</span>
+            <span id="assists-value" class="value">0</span>
+          </div>
+          <div id="stat-turrets" class="stat-pill">
+            <span class="label">TORRES</span>
+            <span id="turrets-value" class="value">0</span>
+          </div>
+          <div id="stat-cs" class="stat-pill">
+            <span class="label">CS</span>
+            <span id="cs-value" class="value">0 (0.0)</span>
+          </div>
+          <div id="stat-gold" class="stat-pill gold">
+            <span class="label">OURO</span>
+            <span id="gold-value" class="value">0</span>
+          </div>
+          <div id="stat-ward" class="stat-pill">
+            <span class="label">VISÃO</span>
+            <span id="ward-value" class="value">0</span>
+          </div>
+        </div>
+
+        <div id="items-row" class="items-row"></div>
+
+        <div id="rune-section" class="rune-section">
+          <div class="rune-header">
+            <span class="history-label">PÁGINA DE RUNAS</span>
+            <span id="rune-trees-label" class="rune-trees-label"></span>
+          </div>
+          <div id="rune-list" class="rune-list"></div>
+        </div>
+
+        <div id="history-section" class="history-section">
+          <span class="history-label">COMPRADOS NA PARTIDA</span>
+          <div id="purchase-history-row" class="purchase-history-row"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/event-icons.js"></script>
+  <script src="/sound-player.js"></script>
+  <script src="/overlay.js"></script>
+</body>
+</html>

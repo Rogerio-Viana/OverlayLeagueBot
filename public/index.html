@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OverlayLeagueBot — Painel</title>
+  <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+  <link rel="stylesheet" href="/dashboard.css" />
+</head>
+<body>
+  <!-- Top Navbar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="brand">
+        <div class="brand-icon">
+          <img src="/logo.jpg" alt="OverlayLeagueBot" />
+        </div>
+        <span>OverlayLeagueBot</span>
+      </div>
+      <nav class="topbar-nav">
+        <button type="button" class="topbar-link" data-nav="overview">URLs OBS</button>
+        <button type="button" class="topbar-link" data-nav="overlay-hud">Overlay Completo</button>
+        <button type="button" class="topbar-link" data-nav="items">Itens</button>
+        <button type="button" class="topbar-link" data-nav="events">Eventos</button>
+        <button type="button" class="topbar-link" data-nav="sounds">Sons</button>
+        <button type="button" class="topbar-link" data-nav="mock">Prévia &amp; Mock</button>
+      </nav>
+    </div>
+    <div class="topbar-right">
+      <span id="save-status" class="saved-hint"></span>
+      <span id="status-badge" class="badge">OFFLINE</span>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="nav-group">
+        <div class="nav-group-label">Geral</div>
+        <button type="button" class="nav-item active" data-nav="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Visão Geral &amp; URLs</span>
+        </button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">OBS &amp; Alertas</div>
+        <button type="button" class="nav-item" data-nav="overlay-hud">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="14" x2="18" y2="14"/><circle cx="7.5" cy="9.5" r="1.5"/></svg>
+          <span>Overlay Completo</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="items">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          <span>Itens (Compra/Venda)</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="events">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Eventos &amp; Monstros</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="icons">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Ícones &amp; GIFs</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="sounds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <span>Áudio &amp; Sons</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="visibility">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Visibilidade na Tela</span>
+        </button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Transmissão</div>
+        <button type="button" class="nav-item" data-nav="mock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Testes &amp; Prévia ao Vivo</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="all">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Mostrar Tudo</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrap">
+        <div class="page-header">
+          <span class="pill-tag">LEAGUE OF LEGENDS • OBS OVERLAY</span>
+          <h1 id="page-title">Visão Geral &amp; URLs do OBS</h1>
+          <p id="page-subtitle">Conecte as Browser Sources no OBS Studio para exibir itens, runas, monstros e eventos em tempo real durante a sua live.</p>
+        </div>
+
+        <!-- Section: Overview / URLs -->
+        <section class="tab-section active" data-section="overview">
+          <div class="card">
+            <h2>URLs da Browser Source no OBS</h2>
+            <p class="card-desc">Adicione uma ou mais fontes de navegador no OBS Studio conforme o layout da sua transmissão.</p>
+            <div class="url-list">
+              <div class="url-row">
+                <div class="url-meta">
+                  <span class="url-title">Overlay Completo (HUD + Runas + Histórico + Eventos)</span>
+                  <code id="overlay-url">http://localhost:3333/overlay.html</code>
+                </div>
+                <button id="copy-btn" class="primary">Copiar URL Completa</button>
+              </div>
+              <div class="url-row">
+                <div class="url-meta">
+                  <span class="url-title">Somente Ícones de Itens (Compra / Venda em Cinza)</span>
+                  <code id="item-toast-url">http://localhost:3333/item-toast.html</code>
+                </div>
+                <button id="copy-item-btn" class="primary">Copiar URL Itens</button>
+              </div>
+              <div class="url-row">
+                <div class="url-meta">
+                  <span class="url-title">Eventos de Monstros (Dragões, Barão, Arauto, Vastilarvas)</span>
+                  <code id="monster-events-url">http://localhost:3333/monster-events.html</code>
+                </div>
+                <button id="copy-monster-btn" class="primary">Copiar URL Monstros</button>
+              </div>
+              <div class="url-row">
+                <div class="url-meta">
+                  <span class="url-title">Eventos do Mapa (Torres, Inibidores, First Blood até Pentakill)</span>
+                  <code id="map-events-url">http://localhost:3333/map-events.html</code>
+                </div>
+                <button id="copy-map-btn" class="primary">Copiar URL Mapa</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Overlay Completo (Presets + Customizer) -->
+        <section class="tab-section" data-section="overlay-hud">
+          <div class="card">
+            <h2>Opções de Layout do Overlay Completo</h2>
+            <p class="card-desc">Escolha o modelo visual para o Overlay Completo (HUD + Runas + Histórico + Eventos) no OBS.</p>
+            <div id="hud-layout-presets" class="layout-presets-grid">
+              <button type="button" class="layout-preset-card active" data-hud-layout="classic">
+                <div class="layout-mini-preview">
+                  <div class="mini-circle"></div>
+                  <div class="mini-bars">
+                    <div class="mini-bar"></div>
+                    <div class="mini-bar short"></div>
+                  </div>
+                </div>
+                <span class="layout-preset-title">Clássico (HUD Completo)</span>
+                <span class="layout-preset-desc">Card completo com stats, itens, runas e histórico empilhados.</span>
+              </button>
+
+              <button type="button" class="layout-preset-card" data-hud-layout="compact">
+                <div class="layout-mini-preview">
+                  <div class="mini-circle" style="width:14px;height:14px;"></div>
+                  <div class="mini-bars">
+                    <div class="mini-bar"></div>
+                    <div class="mini-bar short"></div>
+                  </div>
+                </div>
+                <span class="layout-preset-title">Compacto (Streamer Slim)</span>
+                <span class="layout-preset-desc">Menor altura e espaçamento reduzido para não cobrir o jogo.</span>
+              </button>
+
+              <button type="button" class="layout-preset-card" data-hud-layout="bar">
+                <div class="layout-mini-preview is-bar">
+                  <div class="mini-circle"></div>
+                  <div class="mini-bars">
+                    <div class="mini-bar"></div>
+                    <div class="mini-bar"></div>
+                    <div class="mini-bar"></div>
+                  </div>
+                </div>
+                <span class="layout-preset-title">Barra Broadcast (Esports)</span>
+                <span class="layout-preset-desc">Faixa horizontal estilo transmissão com blocos lado a lado.</span>
+              </button>
+
+              <button type="button" class="layout-preset-card" data-hud-layout="vertical">
+                <div class="layout-mini-preview is-vertical">
+                  <div class="mini-circle"></div>
+                  <div class="mini-bars">
+                    <div class="mini-bar"></div>
+                    <div class="mini-bar short"></div>
+                  </div>
+                </div>
+                <span class="layout-preset-title">Card Lateral (Vertical)</span>
+                <span class="layout-preset-desc">Coluna estreita em grade, ideal para posicionar nas laterais.</span>
+              </button>
+
+              <button type="button" class="layout-preset-card" data-hud-layout="minimal">
+                <div class="layout-mini-preview is-minimal">
+                  <div class="mini-circle"></div>
+                  <div class="mini-bars">
+                    <div class="mini-bar"></div>
+                    <div class="mini-bar short"></div>
+                  </div>
+                </div>
+                <span class="layout-preset-title">Minimalista (Clean Glass)</span>
+                <span class="layout-preset-desc">Visual translúcido sem bordas pesadas e linha de destaque.</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Customização do Overlay Completo</h2>
+            <p class="card-desc">Personalize posição, tema de cores, transparência, tamanho, bordas e tipografia em tempo real.</p>
+            <div class="grid-form">
+              <label class="field">
+                <span>Posição na Tela</span>
+                <select id="hud-position">
+                  <option value="bottom-left">Inferior Esquerdo</option>
+                  <option value="bottom-center">Inferior Centro</option>
+                  <option value="bottom-right">Inferior Direito</option>
+                  <option value="top-left">Superior Esquerdo</option>
+                  <option value="top-center">Superior Centro</option>
+                  <option value="top-right">Superior Direito</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Tema de Cores</span>
+                <select id="hud-theme">
+                  <option value="lol-gold">LoL Dourado Clássico</option>
+                  <option value="emerald">Esmeralda (LoboBot)</option>
+                  <option value="hextech">Hextech Ciano</option>
+                  <option value="crimson">Carmesim</option>
+                  <option value="custom">Personalizado (Escolher Cores)</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Cor de Destaque (Tema Custom)</span>
+                <div class="color-field-row">
+                  <input id="hud-accentColor" type="color" value="#c8aa6e" />
+                  <span id="hud-accentColorLabel" class="hint">#c8aa6e</span>
+                </div>
+              </label>
+
+              <label class="field">
+                <span>Cor de Fundo (Tema Custom)</span>
+                <div class="color-field-row">
+                  <input id="hud-bgColor" type="color" value="#0a0e17" />
+                  <span id="hud-bgColorLabel" class="hint">#0a0e17</span>
+                </div>
+              </label>
+
+              <label class="field">
+                <span>Escala / Tamanho (<strong id="hud-scale-label">100%</strong>)</span>
+                <input id="hud-scale" type="range" min="70" max="140" value="100" />
+              </label>
+
+              <label class="field">
+                <span>Opacidade do Fundo (<strong id="hud-opacity-label">88%</strong>)</span>
+                <input id="hud-bgOpacity" type="range" min="0" max="100" value="88" />
+              </label>
+
+              <label class="field">
+                <span>Arredondamento das Bordas (<strong id="hud-radius-label">12px</strong>)</span>
+                <input id="hud-borderRadius" type="range" min="0" max="24" value="12" />
+              </label>
+
+              <label class="field">
+                <span>Tipografia</span>
+                <select id="hud-fontFamily">
+                  <option value="default">Padrão (Segoe UI / Sans)</option>
+                  <option value="esports">Esports (Bahnschrift)</option>
+                  <option value="mono">Monospace (Técnica)</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="checks-grid" style="margin-top: 14px;">
+              <label class="check-item"><input type="checkbox" id="hud-showChampLevel" checked /> Mostrar Nível do Campeão</label>
+              <label class="check-item"><input type="checkbox" id="hud-showTimer" checked /> Mostrar Timer da Partida</label>
+              <label class="check-item"><input type="checkbox" id="hud-showRiotId" checked /> Mostrar Riot ID</label>
+            </div>
+
+            <div class="row" style="margin-top: 14px;">
+              <button type="button" id="hud-save-btn" class="primary">Salvar e Aplicar no OBS</button>
+              <button type="button" id="hud-reset-btn">Restaurar Padrão</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Prévia ao Vivo do Overlay Completo</h2>
+            <p class="card-desc">Veja suas alterações aplicadas em tempo real. Ative o Modo Mock caso o League of Legends esteja fechado.</p>
+            <iframe id="overlay-hud-preview-frame" class="overlay-live-frame" src="/overlay.html"></iframe>
+          </div>
+        </section>
+
+        <!-- Section: Items -->
+        <section class="tab-section" data-section="items">
+          <div class="card">
+            <h2>Configuração do Item Comprado e Vendido na Tela</h2>
+            <p class="card-desc">Defina como o ícone do item aparece na tela, animações, tamanho e duração.</p>
+            <div class="config-with-preview">
+              <div class="grid-form">
+                <label class="field">
+                  <span>Como mostrar o item</span>
+                  <select id="cfg-itemDisplayMode">
+                    <option value="icon-only">Somente o ícone do item</option>
+                    <option value="icon-and-name">Ícone + Nome do item</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Tamanho do ícone (<strong id="cfg-iconSizeLabel">64px</strong>)</span>
+                  <input id="cfg-itemIconSize" type="range" min="32" max="140" step="2" value="64" />
+                </label>
+
+                <label class="field">
+                  <span>Animação de entrada</span>
+                  <select id="cfg-itemEntryAnimation">
+                    <option value="zoom">Zoom</option>
+                    <option value="fade">Fade</option>
+                    <option value="slide-up">Deslizar para cima</option>
+                    <option value="slide-left">Deslizar da esquerda</option>
+                    <option value="bounce">Bounce (Salto)</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Animação de saída</span>
+                  <select id="cfg-itemExitAnimation">
+                    <option value="fade">Fade</option>
+                    <option value="slide-down">Deslizar para baixo</option>
+                    <option value="slide-left">Deslizar para esquerda</option>
+                    <option value="zoom">Zoom</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Tempo de duração (segundos)</span>
+                  <input id="cfg-itemDurationSec" type="number" min="1" max="30" step="0.5" value="4.5" />
+                </label>
+              </div>
+
+              <div class="preview-box">
+                <div class="preview-stage">
+                  <div id="pv-item-toast" class="pv-item-toast icon-only">
+                    <div class="pv-item-icon-wrap">
+                      <img id="pv-item-icon" class="pv-item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.22.1/img/item/3089.png" alt="Exemplo Item" />
+                      <span id="pv-item-gold" class="pv-item-gold" style="display: none;">+160g</span>
+                    </div>
+                    <div class="pv-item-text">
+                      <div id="pv-item-label" style="font-size: 10px; font-weight: 800; color: var(--emerald);">ITEM COMPRADO</div>
+                      <div id="pv-item-name" class="pv-title">Capuz da Morte de Rabadon</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="preview-actions">
+                  <button type="button" id="pv-btn-buy" class="primary">Exemplo Compra</button>
+                  <button type="button" id="pv-btn-sell">Exemplo Venda (Cinza)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Events -->
+        <section class="tab-section" data-section="events">
+          <div class="card">
+            <h2>Configuração dos Eventos no Mapa e Monstros</h2>
+            <p class="card-desc">Escolha o formato visual, animações e teste cada monstro, torre ou sequência de abates.</p>
+            <div class="config-with-preview">
+              <div class="grid-form">
+                <label class="field">
+                  <span>Forma de exibição na tela</span>
+                  <select id="cfg-eventDisplayMode">
+                    <option value="icon-and-name">Ícone + Nome do monstro/evento</option>
+                    <option value="icon-and-text">Ícone + Título e Subtítulo</option>
+                    <option value="icon-only">Somente o ícone</option>
+                    <option value="banner">Banner completo</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Tamanho do ícone (<strong id="cfg-eventIconSizeLabel">56px</strong>)</span>
+                  <input id="cfg-eventIconSize" type="range" min="32" max="140" step="2" value="56" />
+                </label>
+
+                <label class="field">
+                  <span>Animação de entrada</span>
+                  <select id="cfg-eventEntryAnimation">
+                    <option value="slide-up">Deslizar para cima</option>
+                    <option value="zoom">Zoom</option>
+                    <option value="fade">Fade</option>
+                    <option value="slide-left">Deslizar da esquerda</option>
+                    <option value="bounce">Bounce (Salto)</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Animação de saída</span>
+                  <select id="cfg-eventExitAnimation">
+                    <option value="fade">Fade</option>
+                    <option value="slide-down">Deslizar para baixo</option>
+                    <option value="slide-left">Deslizar para esquerda</option>
+                    <option value="zoom">Zoom</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Tempo de duração (segundos)</span>
+                  <input id="cfg-eventDurationSec" type="number" min="1" max="30" step="0.5" value="5" />
+                </label>
+              </div>
+
+              <div class="preview-box">
+                <div class="preview-stage">
+                  <div id="pv-event-toast" class="pv-event-toast">
+                    <div id="pv-event-icon" class="pv-event-icon"></div>
+                    <div class="pv-event-text">
+                      <div id="pv-event-title" class="pv-title">DRAGÃO INFERNAL</div>
+                      <div id="pv-event-sub" class="pv-sub">ShowMaker#KR1</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="preview-actions">
+                  <button type="button" data-pv-event="dragon-fire">Infernal</button>
+                  <button type="button" data-pv-event="dragon-water">Oceano</button>
+                  <button type="button" data-pv-event="dragon-earth">Montanha</button>
+                  <button type="button" data-pv-event="dragon-air">Nuvens</button>
+                  <button type="button" data-pv-event="dragon-hextech">Hextec</button>
+                  <button type="button" data-pv-event="dragon-chemtech">Quimtec</button>
+                  <button type="button" data-pv-event="dragon-elder">Ancião</button>
+                  <button type="button" data-pv-event="baron">Barão</button>
+                  <button type="button" data-pv-event="herald">Arauto</button>
+                  <button type="button" data-pv-event="turret">Torre</button>
+                  <button type="button" data-pv-event="first-blood">First Blood</button>
+                  <button type="button" data-pv-event="double-kill">Double Kill</button>
+                  <button type="button" data-pv-event="triple-kill">Triple Kill</button>
+                  <button type="button" data-pv-event="quadra-kill">Quadra Kill</button>
+                  <button type="button" data-pv-event="penta-kill">Pentakill</button>
+                  <button type="button" data-pv-event="kill">Abate</button>
+                  <button type="button" data-pv-event="death">Morte</button>
+                  <button type="button" data-pv-event="assist">Assist</button>
+                  <button type="button" data-pv-event="enemy-dragon">Inimigo (Cinza)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Custom Icons & GIFs -->
+        <section class="tab-section" data-section="icons">
+          <div class="card">
+            <h2>Personalizar Ícone / GIF por Evento</h2>
+            <p class="card-desc">Envie um GIF ou imagem personalizada (.gif, .png, .jpg, .webp) para qualquer monstro ou evento do mapa.</p>
+            <div id="event-image-grid" class="sound-grid"></div>
+          </div>
+        </section>
+
+        <!-- Section: Sounds -->
+        <section class="tab-section" data-section="sounds">
+          <div class="card">
+            <h2>Configurações de Som</h2>
+            <p class="card-desc">Ative, ajuste o volume ou envie arquivos de áudio (.mp3, .wav, .ogg) para cada tipo de evento.</p>
+            <div class="row" style="margin-bottom: 12px;">
+              <label class="check-item"><input type="checkbox" id="snd-enabled" checked /> Ativar sons</label>
+              <label class="check-item"><input type="checkbox" id="snd-playInOverlay" checked /> Tocar na URL Completa</label>
+              <label class="check-item"><input type="checkbox" id="snd-playInDedicatedUrls" checked /> Tocar nas URLs Dedicadas</label>
+              <label class="field" style="min-width: 190px;">
+                <span>Volume (<strong id="snd-volumeLabel">70%</strong>)</span>
+                <input id="snd-volume" type="range" min="0" max="100" step="1" value="70" />
+              </label>
+            </div>
+            <div id="sound-grid" class="sound-grid"></div>
+          </div>
+        </section>
+
+        <!-- Section: Visibility -->
+        <section class="tab-section" data-section="visibility">
+          <div class="card">
+            <h2>Informações Visíveis na Tela</h2>
+            <div class="checks-grid">
+              <label class="check-item"><input type="checkbox" id="vis-showHudCard" checked /> Card principal do jogador</label>
+              <label class="check-item"><input type="checkbox" id="vis-showKills" checked /> Abates feitos</label>
+              <label class="check-item"><input type="checkbox" id="vis-showDeaths" checked /> Mortes</label>
+              <label class="check-item"><input type="checkbox" id="vis-showAssists" checked /> Assistências</label>
+              <label class="check-item"><input type="checkbox" id="vis-showTurrets" checked /> Torres caídas</label>
+              <label class="check-item"><input type="checkbox" id="vis-showCs" checked /> CS e CS/min</label>
+              <label class="check-item"><input type="checkbox" id="vis-showGold" checked /> Ouro</label>
+              <label class="check-item"><input type="checkbox" id="vis-showWard" checked /> Visão (Ward Score)</label>
+              <label class="check-item"><input type="checkbox" id="vis-showInventory" checked /> Inventário atual</label>
+              <label class="check-item"><input type="checkbox" id="vis-showRunePage" checked /> Página de Runas</label>
+              <label class="check-item"><input type="checkbox" id="vis-showPurchaseHistory" checked /> Histórico de itens comprados</label>
+              <label class="check-item"><input type="checkbox" id="vis-showItemToast" checked /> Alerta de item comprado</label>
+              <label class="check-item"><input type="checkbox" id="vis-showSoldItemToast" checked /> Alerta de item vendido (+ouro)</label>
+              <label class="check-item"><input type="checkbox" id="vis-showEventBanner" checked /> Banner de eventos</label>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Alertas de Eventos na Tela</h2>
+            <div class="checks-grid">
+              <label class="check-item"><input type="checkbox" id="vis-showKillEvents" checked /> Abates feitos</label>
+              <label class="check-item"><input type="checkbox" id="vis-showDeathEvents" checked /> Mortes</label>
+              <label class="check-item"><input type="checkbox" id="vis-showAssistEvents" checked /> Assistências</label>
+              <label class="check-item"><input type="checkbox" id="vis-showTurretEvents" checked /> Torres caídas</label>
+              <label class="check-item"><input type="checkbox" id="vis-showObjectiveEvents" checked /> Objetivos (Dragão/Barão/First Blood)</label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Mock & Live Preview -->
+        <section class="tab-section" data-section="mock">
+          <div class="card">
+            <h2>Modo de Teste (Mock)</h2>
+            <p class="card-desc">Simule uma partida completa e dispare eventos para testar no OBS sem precisar abrir o League of Legends.</p>
+            <div class="row">
+              <button id="toggle-mock-btn" class="primary">Ativar Modo Mock</button>
+              <button id="buy-item-btn">Simular Compra de Item</button>
+              <button id="sell-item-btn">Simular Venda de Item</button>
+              <button data-event="first_blood">First Blood</button>
+              <button data-event="double_kill">Double Kill</button>
+              <button data-event="triple_kill">Triple Kill</button>
+              <button data-event="quadra_kill">Quadra Kill</button>
+              <button data-event="penta_kill">Pentakill</button>
+              <button data-event="dragon_fire">Dragão Infernal</button>
+              <button data-event="dragon_water">Dragão Oceano</button>
+              <button data-event="dragon_earth">Dragão Montanha</button>
+              <button data-event="dragon_air">Dragão Nuvens</button>
+              <button data-event="dragon_hextech">Dragão Hextec</button>
+              <button data-event="dragon_chemtech">Dragão Quimtec</button>
+              <button data-event="dragon_elder">Dragão Ancião</button>
+              <button data-event="baron">Barão</button>
+              <button data-event="herald">Arauto</button>
+              <button data-event="voidgrubs">Vastilarvas</button>
+              <button data-event="turret">Torre Caída</button>
+              <button data-event="inhibitor">Inibidor</button>
+              <button data-event="kill">Abate</button>
+              <button data-event="death">Morte</button>
+              <button data-event="assist">Assistência</button>
+              <button data-event="enemy_dragon">Dragão Inimigo</button>
+              <button data-event="enemy_baron">Barão Inimigo</button>
+              <button data-event="enemy_turret">Torre Aliada Caída</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Prévia ao Vivo do Overlay Completo</h2>
+            <iframe src="/overlay.html"></iframe>
+          </div>
+        </section>
+
+        <footer class="page-footer">
+          Made with ❤️ by <a href="https://github.com/Rogerio-Viana" target="_blank" rel="noopener noreferrer">RogersV</a>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script src="/event-icons.js"></script>
+  <script src="/sound-player.js"></script>
+  <script>
+    const PAGE_META = {
+      overview: {
+        title: 'Visão Geral & URLs do OBS',
+        subtitle: 'Conecte as Browser Sources no OBS Studio para exibir itens, runas, monstros e eventos em tempo real durante a sua live.',
+      },
+      'overlay-hud': {
+        title: 'Overlay Completo (Modelos & Customização)',
+        subtitle: 'Escolha entre 5 modelos visuais e personalize posição, cores, transparência, escala, bordas e tipografia.',
+      },
+      items: {
+        title: 'Itens (Compra & Venda)',
+        subtitle: 'Configure como os ícones de itens comprados e vendidos (em cinza + ouro ganho) aparecem na tela.',
+      },
+      events: {
+        title: 'Eventos & Monstros',
+        subtitle: 'Personalize o formato, tamanho e animações de Dragões, Barão, Torres, First Blood até Pentakill e eventos inimigos.',
+      },
+      icons: {
+        title: 'Ícones & GIFs Personalizados',
+        subtitle: 'Substitua o ícone padrão de qualquer monstro ou evento por um GIF ou imagem personalizada.',
+      },
+      sounds: {
+        title: 'Áudio & Sons',
+        subtitle: 'Configure o volume, ative ou envie áudios personalizados para tocar automaticamente em cada evento.',
+      },
+      visibility: {
+        title: 'Visibilidade na Tela',
+        subtitle: 'Escolha exatamente quais estatísticas, seções do HUD e alertas de combate devem aparecer no overlay.',
+      },
+      mock: {
+        title: 'Testes & Prévia ao Vivo',
+        subtitle: 'Simule compras, vendas e eventos da partida para validar seu layout antes de entrar ao vivo.',
+      },
+      all: {
+        title: 'Todas as Configurações',
+        subtitle: 'Visualização completa de todas as configurações, personalizações e prévias do OverlayLeagueBot.',
+      },
+    };
+
+    const pageTitleEl = document.getElementById('page-title');
+    const pageSubtitleEl = document.getElementById('page-subtitle');
+    const sections = document.querySelectorAll('.tab-section');
+    const navButtons = document.querySelectorAll('[data-nav]');
+
+    function setActiveTab(tab) {
+      const meta = PAGE_META[tab] || PAGE_META.overview;
+      pageTitleEl.textContent = meta.title;
+      pageSubtitleEl.textContent = meta.subtitle;
+
+      sections.forEach((sec) => {
+        const show = tab === 'all' || sec.dataset.section === tab;
+        sec.classList.toggle('active', show);
+      });
+
+      document.querySelectorAll('.sidebar .nav-item').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.nav === tab);
+      });
+    }
+
+    navButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        setActiveTab(btn.dataset.nav);
+      });
+    });
+
+    const overlayUrlEl = document.getElementById('overlay-url');
+    const copyBtn = document.getElementById('copy-btn');
+    const itemToastUrlEl = document.getElementById('item-toast-url');
+    const copyItemBtn = document.getElementById('copy-item-btn');
+    const monsterEventsUrlEl = document.getElementById('monster-events-url');
+    const copyMonsterBtn = document.getElementById('copy-monster-btn');
+    const mapEventsUrlEl = document.getElementById('map-events-url');
+    const copyMapBtn = document.getElementById('copy-map-btn');
+    const toggleMockBtn = document.getElementById('toggle-mock-btn');
+    const statusBadge = document.getElementById('status-badge');
+    const saveStatus = document.getElementById('save-status');
+
+    const cfgDisplayMode = document.getElementById('cfg-itemDisplayMode');
+    const cfgIconSize = document.getElementById('cfg-itemIconSize');
+    const cfgIconSizeLabel = document.getElementById('cfg-iconSizeLabel');
+    const cfgEntryAnim = document.getElementById('cfg-itemEntryAnimation');
+    const cfgExitAnim = document.getElementById('cfg-itemExitAnimation');
+    const cfgDuration = document.getElementById('cfg-itemDurationSec');
+
+    const cfgEventDisplayMode = document.getElementById('cfg-eventDisplayMode');
+    const cfgEventIconSize = document.getElementById('cfg-eventIconSize');
+    const cfgEventIconSizeLabel = document.getElementById('cfg-eventIconSizeLabel');
+    const cfgEventEntryAnim = document.getElementById('cfg-eventEntryAnimation');
+    const cfgEventExitAnim = document.getElementById('cfg-eventExitAnimation');
+    const cfgEventDuration = document.getElementById('cfg-eventDurationSec');
+
+    const sndEnabled = document.getElementById('snd-enabled');
+    const sndPlayOverlay = document.getElementById('snd-playInOverlay');
+    const sndPlayDedicated = document.getElementById('snd-playInDedicatedUrls');
+    const sndVolume = document.getElementById('snd-volume');
+    const sndVolumeLabel = document.getElementById('snd-volumeLabel');
+    const soundGridEl = document.getElementById('sound-grid');
+
+    const SOUND_ITEMS = [
+      { key: 'itemBuy', label: 'Compra de Item' },
+      { key: 'itemSell', label: 'Venda de Item' },
+      { key: 'dragon', label: 'Morte de Dragão' },
+      { key: 'baron', label: 'Morte de Barão' },
+      { key: 'herald', label: 'Arauto / Vastilarvas' },
+      { key: 'turret', label: 'Torre / Inibidor Caído' },
+      { key: 'firstBlood', label: 'First Blood' },
+      { key: 'doubleKill', label: 'Double Kill' },
+      { key: 'tripleKill', label: 'Triple Kill' },
+      { key: 'quadraKill', label: 'Quadra Kill' },
+      { key: 'pentaKill', label: 'Pentakill' },
+      { key: 'kill', label: 'Abate / Ace' },
+      { key: 'death', label: 'Morte do Jogador' },
+      { key: 'assist', label: 'Assistência' },
+      { key: 'enemyBad', label: 'Evento Bom p/ Inimigo (Som Ruim)' },
+    ];
+
+    let currentSoundConfig = {
+      enabled: true,
+      volume: 70,
+      playInOverlay: true,
+      playInDedicatedUrls: true,
+      triggers: {},
+      customFiles: {},
+    };
+
+    const eventImageGridEl = document.getElementById('event-image-grid');
+    const EVENT_IMAGE_ITEMS = [
+      { key: 'dragon-fire', label: 'Dragão Infernal' },
+      { key: 'dragon-water', label: 'Dragão do Oceano' },
+      { key: 'dragon-earth', label: 'Dragão da Montanha' },
+      { key: 'dragon-air', label: 'Dragão das Nuvens' },
+      { key: 'dragon-hextech', label: 'Dragão Hextec' },
+      { key: 'dragon-chemtech', label: 'Dragão Quimtec' },
+      { key: 'dragon-elder', label: 'Dragão Ancião' },
+      { key: 'baron', label: 'Barão Nashor' },
+      { key: 'herald', label: 'Arauto do Vale' },
+      { key: 'voidgrubs', label: 'Vastilarvas' },
+      { key: 'turret', label: 'Torre Caída' },
+      { key: 'inhibitor', label: 'Inibidor Destruído' },
+      { key: 'kill', label: 'Abate' },
+      { key: 'death', label: 'Morte' },
+      { key: 'assist', label: 'Assistência' },
+      { key: 'first-blood', label: 'First Blood' },
+      { key: 'double-kill', label: 'Double Kill' },
+      { key: 'triple-kill', label: 'Triple Kill' },
+      { key: 'quadra-kill', label: 'Quadra Kill' },
+      { key: 'penta-kill', label: 'Pentakill' },
+      { key: 'ace', label: 'Ace' },
+    ];
+    let currentEventCustomImages = {};
+
+    const visibilityKeys = [
+      'showHudCard',
+      'showKills',
+      'showDeaths',
+      'showAssists',
+      'showTurrets',
+      'showCs',
+      'showGold',
+      'showWard',
+      'showInventory',
+      'showRunePage',
+      'showPurchaseHistory',
+      'showItemToast',
+      'showSoldItemToast',
+      'showEventBanner',
+      'showKillEvents',
+      'showDeathEvents',
+      'showAssistEvents',
+      'showTurretEvents',
+      'showObjectiveEvents',
+    ];
+
+    const overlayUrl = `${location.origin}/overlay.html`;
+    overlayUrlEl.textContent = overlayUrl;
+    const itemToastUrl = `${location.origin}/item-toast.html`;
+    itemToastUrlEl.textContent = itemToastUrl;
+    const monsterEventsUrl = `${location.origin}/monster-events.html`;
+    monsterEventsUrlEl.textContent = monsterEventsUrl;
+    const mapEventsUrl = `${location.origin}/map-events.html`;
+    mapEventsUrlEl.textContent = mapEventsUrl;
+
+    let currentMock = false;
+    let loadedInitialConfig = false;
+
+    function bindCopy(btn, url) {
+      const original = btn.textContent;
+      btn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = 'Copiado!';
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      });
+    }
+
+    bindCopy(copyBtn, overlayUrl);
+    bindCopy(copyItemBtn, itemToastUrl);
+    bindCopy(copyMonsterBtn, monsterEventsUrl);
+    bindCopy(copyMapBtn, mapEventsUrl);
+
+    let currentHudLayout = 'classic';
+    const hudLayoutCards = document.querySelectorAll('[data-hud-layout]');
+    const hudPosition = document.getElementById('hud-position');
+    const hudTheme = document.getElementById('hud-theme');
+    const hudAccentColor = document.getElementById('hud-accentColor');
+    const hudAccentColorLabel = document.getElementById('hud-accentColorLabel');
+    const hudBgColor = document.getElementById('hud-bgColor');
+    const hudBgColorLabel = document.getElementById('hud-bgColorLabel');
+    const hudScale = document.getElementById('hud-scale');
+    const hudScaleLabel = document.getElementById('hud-scale-label');
+    const hudBgOpacity = document.getElementById('hud-bgOpacity');
+    const hudOpacityLabel = document.getElementById('hud-opacity-label');
+    const hudBorderRadius = document.getElementById('hud-borderRadius');
+    const hudRadiusLabel = document.getElementById('hud-radius-label');
+    const hudFontFamily = document.getElementById('hud-fontFamily');
+    const hudShowChampLevel = document.getElementById('hud-showChampLevel');
+    const hudShowTimer = document.getElementById('hud-showTimer');
+    const hudShowRiotId = document.getElementById('hud-showRiotId');
+    const hudSaveBtn = document.getElementById('hud-save-btn');
+    const hudResetBtn = document.getElementById('hud-reset-btn');
+
+    function setActiveHudLayout(layout) {
+      currentHudLayout = layout || 'classic';
+      hudLayoutCards.forEach((card) => {
+        card.classList.toggle('active', card.dataset.hudLayout === currentHudLayout);
+      });
+    }
+
+    function buildHudConfigPayload() {
+      return {
+        layout: currentHudLayout,
+        position: hudPosition.value,
+        theme: hudTheme.value,
+        accentColor: hudAccentColor.value,
+        bgColor: hudBgColor.value,
+        bgOpacity: Number(hudBgOpacity.value),
+        borderRadius: Number(hudBorderRadius.value),
+        scale: Number(hudScale.value),
+        fontFamily: hudFontFamily.value,
+        showChampLevel: hudShowChampLevel.checked,
+        showTimer: hudShowTimer.checked,
+        showRiotId: hudShowRiotId.checked,
+      };
+    }
+
+    function fillConfigForm(config) {
+      if (!config) return;
+      cfgDisplayMode.value = config.itemDisplayMode || 'icon-only';
+      cfgIconSize.value = String(config.itemIconSize || 64);
+      cfgIconSizeLabel.textContent = `${cfgIconSize.value}px`;
+      cfgEntryAnim.value = config.itemEntryAnimation || 'zoom';
+      cfgExitAnim.value = config.itemExitAnimation || 'fade';
+      cfgDuration.value = String(config.itemDurationSec || 4.5);
+
+      const ev = config.eventConfig || {};
+      cfgEventDisplayMode.value = ev.displayMode || 'icon-and-name';
+      cfgEventIconSize.value = String(ev.iconSize || 56);
+      cfgEventIconSizeLabel.textContent = `${cfgEventIconSize.value}px`;
+      cfgEventEntryAnim.value = ev.entryAnimation || 'slide-up';
+      cfgEventExitAnim.value = ev.exitAnimation || 'fade';
+      cfgEventDuration.value = String(ev.durationSec || 5);
+      currentEventCustomImages = ev.customImages || {};
+      renderEventImageGrid();
+
+      const hud = config.hudConfig || {};
+      setActiveHudLayout(hud.layout || 'classic');
+      hudPosition.value = hud.position || 'bottom-left';
+      hudTheme.value = hud.theme || 'lol-gold';
+      hudAccentColor.value = hud.accentColor || '#c8aa6e';
+      hudAccentColorLabel.textContent = hudAccentColor.value;
+      hudBgColor.value = hud.bgColor || '#0a0e17';
+      hudBgColorLabel.textContent = hudBgColor.value;
+      hudScale.value = String(hud.scale ?? 100);
+      hudScaleLabel.textContent = `${hudScale.value}%`;
+      hudBgOpacity.value = String(hud.bgOpacity ?? 88);
+      hudOpacityLabel.textContent = `${hudBgOpacity.value}%`;
+      hudBorderRadius.value = String(hud.borderRadius ?? 12);
+      hudRadiusLabel.textContent = `${hudBorderRadius.value}px`;
+      hudFontFamily.value = hud.fontFamily || 'default';
+      hudShowChampLevel.checked = hud.showChampLevel !== false;
+      hudShowTimer.checked = hud.showTimer !== false;
+      hudShowRiotId.checked = hud.showRiotId !== false;
+
+      const vis = config.visibility || {};
+      for (const key of visibilityKeys) {
+        const el = document.getElementById(`vis-${key}`);
+        if (el) el.checked = vis[key] !== false;
+      }
+
+      if (config.soundConfig) {
+        currentSoundConfig = config.soundConfig;
+        sndEnabled.checked = currentSoundConfig.enabled !== false;
+        sndPlayOverlay.checked = currentSoundConfig.playInOverlay !== false;
+        sndPlayDedicated.checked = currentSoundConfig.playInDedicatedUrls !== false;
+        sndVolume.value = String(currentSoundConfig.volume ?? 70);
+        sndVolumeLabel.textContent = `${sndVolume.value}%`;
+        renderSoundGrid();
+      }
+
+      playItemPreview(false);
+      playEventPreview(false);
+    }
+
+    function buildSoundConfigPayload() {
+      const triggers = {};
+      for (const item of SOUND_ITEMS) {
+        const cb = document.getElementById(`snd-trig-${item.key}`);
+        triggers[item.key] = cb ? cb.checked : true;
+      }
+      currentSoundConfig = {
+        enabled: sndEnabled.checked,
+        volume: Number(sndVolume.value),
+        playInOverlay: sndPlayOverlay.checked,
+        playInDedicatedUrls: sndPlayDedicated.checked,
+        triggers,
+        customFiles: currentSoundConfig.customFiles || {},
+      };
+      return currentSoundConfig;
+    }
+
+    function renderSoundGrid() {
+      soundGridEl.innerHTML = '';
+      for (const item of SOUND_ITEMS) {
+        const isChecked = currentSoundConfig.triggers?.[item.key] !== false;
+        const hasCustom = Boolean(currentSoundConfig.customFiles?.[item.key]);
+
+        const row = document.createElement('div');
+        row.className = 'sound-row';
+
+        const top = document.createElement('div');
+        top.className = 'sound-row-top';
+        top.innerHTML = `<label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" id="snd-trig-${item.key}" ${isChecked ? 'checked' : ''} /> <strong>${item.label}</strong></label><span class="sound-badge">${hasCustom ? 'Personalizado' : 'Padrão'}</span>`;
+
+        const actions = document.createElement('div');
+        actions.className = 'sound-row-actions';
+
+        const testBtn = document.createElement('button');
+        testBtn.type = 'button';
+        testBtn.textContent = 'Testar Som';
+        testBtn.addEventListener('click', () => {
+          window.playLoLSound(item.key, buildSoundConfigPayload(), 'preview');
+        });
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.mp3,.wav,.ogg,.webm,.m4a,audio/*';
+        fileInput.style.display = 'none';
+        fileInput.addEventListener('change', async () => {
+          const file = fileInput.files?.[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = async () => {
+            const res = await fetch(`/api/sounds/${item.key}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ fileName: file.name, dataBase64: reader.result }),
+            });
+            const data = await res.json();
+            if (data.config?.soundConfig) {
+              currentSoundConfig = data.config.soundConfig;
+              renderSoundGrid();
+              window.playLoLSound(item.key, currentSoundConfig, 'preview');
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+
+        const uploadBtn = document.createElement('button');
+        uploadBtn.type = 'button';
+        uploadBtn.textContent = 'Escolher Áudio';
+        uploadBtn.addEventListener('click', () => fileInput.click());
+
+        actions.appendChild(testBtn);
+        actions.appendChild(uploadBtn);
+        actions.appendChild(fileInput);
+
+        if (hasCustom) {
+          const resetBtn = document.createElement('button');
+          resetBtn.type = 'button';
+          resetBtn.textContent = 'Padrão';
+          resetBtn.addEventListener('click', async () => {
+            const res = await fetch(`/api/sounds/${item.key}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.config?.soundConfig) {
+              currentSoundConfig = data.config.soundConfig;
+              renderSoundGrid();
+            }
+          });
+          actions.appendChild(resetBtn);
+        }
+
+        row.appendChild(top);
+        row.appendChild(actions);
+        soundGridEl.appendChild(row);
+
+        row.querySelector(`#snd-trig-${item.key}`).addEventListener('change', () => {
+          void saveConfig();
+        });
+      }
+    }
+
+    renderSoundGrid();
+
+    function renderEventImageGrid() {
+      eventImageGridEl.innerHTML = '';
+      for (const item of EVENT_IMAGE_ITEMS) {
+        const hasCustom = Boolean(currentEventCustomImages?.[item.key]);
+
+        const row = document.createElement('div');
+        row.className = 'sound-row';
+
+        const top = document.createElement('div');
+        top.className = 'sound-row-top';
+
+        const left = document.createElement('div');
+        left.style.cssText = 'display:flex;align-items:center;gap:8px;';
+
+        const thumb = document.createElement('div');
+        thumb.className = 'pv-event-icon';
+        thumb.style.cssText = 'width:32px;height:32px;padding:3px;border-radius:8px;';
+        window.renderLoLEventIcon(thumb, item.key, currentEventCustomImages);
+
+        const title = document.createElement('strong');
+        title.textContent = item.label;
+        left.appendChild(thumb);
+        left.appendChild(title);
+
+        const badge = document.createElement('span');
+        badge.className = 'sound-badge';
+        badge.textContent = hasCustom ? 'Personalizado' : 'Padrão';
+
+        top.appendChild(left);
+        top.appendChild(badge);
+
+        const actions = document.createElement('div');
+        actions.className = 'sound-row-actions';
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.gif,.png,.jpg,.jpeg,.webp,image/*';
+        fileInput.style.display = 'none';
+        fileInput.addEventListener('change', async () => {
+          const file = fileInput.files?.[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = async () => {
+            const res = await fetch(`/api/event-images/${item.key}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ fileName: file.name, dataBase64: reader.result }),
+            });
+            const data = await res.json();
+            if (data.config?.eventConfig) {
+              currentEventCustomImages = data.config.eventConfig.customImages || {};
+              renderEventImageGrid();
+              pvEventKind = item.key in pvEventSamples ? item.key : pvEventKind;
+              playEventPreview(true);
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+
+        const uploadBtn = document.createElement('button');
+        uploadBtn.type = 'button';
+        uploadBtn.textContent = 'Escolher GIF / Imagem';
+        uploadBtn.addEventListener('click', () => fileInput.click());
+
+        actions.appendChild(uploadBtn);
+        actions.appendChild(fileInput);
+
+        if (hasCustom) {
+          const resetBtn = document.createElement('button');
+          resetBtn.type = 'button';
+          resetBtn.textContent = 'Padrão';
+          resetBtn.addEventListener('click', async () => {
+            const res = await fetch(`/api/event-images/${item.key}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.config?.eventConfig) {
+              currentEventCustomImages = data.config.eventConfig.customImages || {};
+              renderEventImageGrid();
+              playEventPreview(false);
+            }
+          });
+          actions.appendChild(resetBtn);
+        }
+
+        row.appendChild(top);
+        row.appendChild(actions);
+        eventImageGridEl.appendChild(row);
+      }
+    }
+
+    renderEventImageGrid();
+
+    sndVolume.addEventListener('input', () => {
+      sndVolumeLabel.textContent = `${sndVolume.value}%`;
+    });
+    [sndEnabled, sndPlayOverlay, sndPlayDedicated, sndVolume].forEach((el) => {
+      el.addEventListener('change', () => { void saveConfig(); });
+    });
+
+    function buildFullConfigPayload() {
+      const visibility = {};
+      for (const key of visibilityKeys) {
+        const el = document.getElementById(`vis-${key}`);
+        visibility[key] = Boolean(el?.checked);
+      }
+
+      return {
+        itemDisplayMode: cfgDisplayMode.value,
+        itemIconSize: Number(cfgIconSize.value),
+        itemEntryAnimation: cfgEntryAnim.value,
+        itemExitAnimation: cfgExitAnim.value,
+        itemDurationSec: Number(cfgDuration.value),
+        eventConfig: {
+          displayMode: cfgEventDisplayMode.value,
+          iconSize: Number(cfgEventIconSize.value),
+          entryAnimation: cfgEventEntryAnim.value,
+          exitAnimation: cfgEventExitAnim.value,
+          durationSec: Number(cfgEventDuration.value),
+          customImages: currentEventCustomImages,
+        },
+        soundConfig: buildSoundConfigPayload(),
+        hudConfig: buildHudConfigPayload(),
+        visibility,
+      };
+    }
+
+    function pushHudPreview() {
+      const payload = buildFullConfigPayload();
+      document.querySelectorAll('iframe[src="/overlay.html"]').forEach((frame) => {
+        if (frame.contentWindow) {
+          frame.contentWindow.postMessage({ type: 'preview-config', payload }, '*');
+        }
+      });
+    }
+
+    async function saveConfig() {
+      const payload = buildFullConfigPayload();
+
+      await fetch('/api/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      pushHudPreview();
+      saveStatus.textContent = 'Salvo no OBS';
+      setTimeout(() => { saveStatus.textContent = ''; }, 1800);
+    }
+
+    hudLayoutCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        setActiveHudLayout(card.dataset.hudLayout);
+        pushHudPreview();
+        void saveConfig();
+      });
+    });
+
+    [hudPosition, hudTheme, hudFontFamily, hudShowChampLevel, hudShowTimer, hudShowRiotId].forEach((el) => {
+      el.addEventListener('change', () => {
+        pushHudPreview();
+        void saveConfig();
+      });
+    });
+
+    hudScale.addEventListener('input', () => {
+      hudScaleLabel.textContent = `${hudScale.value}%`;
+      pushHudPreview();
+    });
+    hudBgOpacity.addEventListener('input', () => {
+      hudOpacityLabel.textContent = `${hudBgOpacity.value}%`;
+      pushHudPreview();
+    });
+    hudBorderRadius.addEventListener('input', () => {
+      hudRadiusLabel.textContent = `${hudBorderRadius.value}px`;
+      pushHudPreview();
+    });
+    [hudScale, hudBgOpacity, hudBorderRadius].forEach((el) => {
+      el.addEventListener('change', () => { void saveConfig(); });
+    });
+
+    hudAccentColor.addEventListener('input', () => {
+      hudAccentColorLabel.textContent = hudAccentColor.value;
+      hudTheme.value = 'custom';
+      pushHudPreview();
+    });
+    hudBgColor.addEventListener('input', () => {
+      hudBgColorLabel.textContent = hudBgColor.value;
+      hudTheme.value = 'custom';
+      pushHudPreview();
+    });
+    [hudAccentColor, hudBgColor].forEach((el) => {
+      el.addEventListener('change', () => { void saveConfig(); });
+    });
+
+    hudSaveBtn.addEventListener('click', () => {
+      void saveConfig();
+    });
+
+    hudResetBtn.addEventListener('click', () => {
+      setActiveHudLayout('classic');
+      hudPosition.value = 'bottom-left';
+      hudTheme.value = 'lol-gold';
+      hudAccentColor.value = '#c8aa6e';
+      hudAccentColorLabel.textContent = '#c8aa6e';
+      hudBgColor.value = '#0a0e17';
+      hudBgColorLabel.textContent = '#0a0e17';
+      hudScale.value = '100';
+      hudScaleLabel.textContent = '100%';
+      hudBgOpacity.value = '88';
+      hudOpacityLabel.textContent = '88%';
+      hudBorderRadius.value = '12';
+      hudRadiusLabel.textContent = '12px';
+      hudFontFamily.value = 'default';
+      hudShowChampLevel.checked = true;
+      hudShowTimer.checked = true;
+      hudShowRiotId.checked = true;
+      pushHudPreview();
+      void saveConfig();
+    });
+
+    let pvItemSold = false;
+    let pvItemExitTimer = null;
+    let pvEventKind = 'dragon-fire';
+    let pvEventExitTimer = null;
+
+    const pvEventSamples = {
+      'dragon-fire': { title: 'DRAGÃO INFERNAL', sub: 'ShowMaker#KR1', iconType: 'dragon-fire' },
+      'dragon-water': { title: 'DRAGÃO DO OCEANO', sub: 'ShowMaker#KR1', iconType: 'dragon-water' },
+      'dragon-earth': { title: 'DRAGÃO DA MONTANHA', sub: 'ShowMaker#KR1', iconType: 'dragon-earth' },
+      'dragon-air': { title: 'DRAGÃO DAS NUVENS', sub: 'ShowMaker#KR1', iconType: 'dragon-air' },
+      'dragon-hextech': { title: 'DRAGÃO HEXTEC', sub: 'ShowMaker#KR1', iconType: 'dragon-hextech' },
+      'dragon-chemtech': { title: 'DRAGÃO QUIMTEC', sub: 'ShowMaker#KR1', iconType: 'dragon-chemtech' },
+      'dragon-elder': { title: 'DRAGÃO ANCIÃO', sub: 'ShowMaker#KR1', iconType: 'dragon-elder' },
+      baron: { title: 'BARÃO NASHOR', sub: 'ShowMaker#KR1', iconType: 'baron' },
+      herald: { title: 'ARAUTO DO VALE', sub: 'ShowMaker#KR1', iconType: 'herald' },
+      turret: { title: 'TORRE DESTRUÍDA', sub: 'ShowMaker#KR1', iconType: 'turret' },
+      'first-blood': { title: 'FIRST BLOOD', sub: 'ShowMaker#KR1', iconType: 'first-blood' },
+      'double-kill': { title: 'DOUBLE KILL!', sub: 'ShowMaker#KR1', iconType: 'double-kill' },
+      'triple-kill': { title: 'TRIPLE KILL!', sub: 'ShowMaker#KR1', iconType: 'triple-kill' },
+      'quadra-kill': { title: 'QUADRAKILL!', sub: 'ShowMaker#KR1', iconType: 'quadra-kill' },
+      'penta-kill': { title: 'PENTAKILL!', sub: 'ShowMaker#KR1', iconType: 'penta-kill' },
+      kill: { title: 'ABATE!', sub: 'Eliminou Faker#KR1', iconType: 'kill' },
+      death: { title: 'ABATIDO', sub: 'Eliminado por Faker#KR1', iconType: 'death' },
+      assist: { title: 'ASSISTÊNCIA!', sub: 'Assistência em Faker#KR1', iconType: 'assist' },
+      'enemy-dragon': { title: 'DRAGÃO INFERNAL', sub: 'Faker#KR1 (Inimigo)', iconType: 'dragon-fire', isEnemyAdvantage: true },
+    };
+
+    function playItemPreview(playAnim = true) {
+      const el = document.getElementById('pv-item-toast');
+      const icon = document.getElementById('pv-item-icon');
+      const gold = document.getElementById('pv-item-gold');
+      const label = document.getElementById('pv-item-label');
+      const name = document.getElementById('pv-item-name');
+
+      el.classList.toggle('icon-only', cfgDisplayMode.value !== 'icon-and-name');
+      el.classList.toggle('sold', pvItemSold);
+      el.style.setProperty('--pv-item-size', `${cfgIconSize.value}px`);
+
+      if (pvItemSold) {
+        icon.src = 'https://ddragon.leagueoflegends.com/cdn/15.22.1/img/item/1056.png';
+        gold.style.display = 'inline-block';
+        label.textContent = 'ITEM VENDIDO';
+        label.style.color = '#e84057';
+        name.textContent = 'Anel de Doran';
+      } else {
+        icon.src = 'https://ddragon.leagueoflegends.com/cdn/15.22.1/img/item/3089.png';
+        gold.style.display = 'none';
+        label.textContent = 'ITEM COMPRADO';
+        label.style.color = '#5fd4a7';
+        name.textContent = 'Capuz da Morte de Rabadon';
+      }
+
+      if (!playAnim) return;
+      if (pvItemExitTimer) clearTimeout(pvItemExitTimer);
+      el.className = `pv-item-toast${cfgDisplayMode.value !== 'icon-and-name' ? ' icon-only' : ''}${pvItemSold ? ' sold' : ''}`;
+      el.style.opacity = '1';
+      void el.offsetWidth;
+      el.classList.add(`anim-in-${cfgEntryAnim.value}`);
+
+      const ms = Math.max(1000, Math.round(Number(cfgDuration.value || 4.5) * 1000));
+      pvItemExitTimer = setTimeout(() => {
+        el.classList.remove(`anim-in-${cfgEntryAnim.value}`);
+        el.classList.add(`anim-out-${cfgExitAnim.value}`);
+      }, ms);
+    }
+
+    function playEventPreview(playAnim = true) {
+      const el = document.getElementById('pv-event-toast');
+      const icon = document.getElementById('pv-event-icon');
+      const title = document.getElementById('pv-event-title');
+      const sub = document.getElementById('pv-event-sub');
+      const sample = pvEventSamples[pvEventKind] || pvEventSamples['dragon-fire'];
+
+      el.classList.remove('icon-only', 'icon-and-name', 'banner', 'enemy-advantage');
+      if (cfgEventDisplayMode.value === 'icon-only') el.classList.add('icon-only');
+      if (cfgEventDisplayMode.value === 'icon-and-name') el.classList.add('icon-and-name');
+      if (cfgEventDisplayMode.value === 'banner') el.classList.add('banner');
+      if (sample.isEnemyAdvantage) el.classList.add('enemy-advantage');
+      el.style.setProperty('--pv-event-size', `${cfgEventIconSize.value}px`);
+
+      window.renderLoLEventIcon(icon, sample.iconType, currentEventCustomImages);
+      title.textContent = sample.title;
+      sub.textContent = sample.sub;
+
+      if (!playAnim) return;
+      if (pvEventExitTimer) clearTimeout(pvEventExitTimer);
+      Array.from(el.classList).filter((c) => c.startsWith('anim-')).forEach((c) => el.classList.remove(c));
+      el.style.opacity = '1';
+      void el.offsetWidth;
+      el.classList.add(`anim-in-${cfgEventEntryAnim.value}`);
+
+      const ms = Math.max(1000, Math.round(Number(cfgEventDuration.value || 5) * 1000));
+      pvEventExitTimer = setTimeout(() => {
+        el.classList.remove(`anim-in-${cfgEventEntryAnim.value}`);
+        el.classList.add(`anim-out-${cfgEventExitAnim.value}`);
+      }, ms);
+    }
+
+    document.getElementById('pv-btn-buy').addEventListener('click', () => {
+      pvItemSold = false;
+      playItemPreview(true);
+      window.playLoLSound('itemBuy', buildSoundConfigPayload(), 'preview');
+    });
+    document.getElementById('pv-btn-sell').addEventListener('click', () => {
+      pvItemSold = true;
+      playItemPreview(true);
+      window.playLoLSound('itemSell', buildSoundConfigPayload(), 'preview');
+    });
+    document.querySelectorAll('button[data-pv-event]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        pvEventKind = btn.dataset.pvEvent;
+        playEventPreview(true);
+        const keyMap = {
+          'dragon-fire': 'dragon',
+          'dragon-water': 'dragon',
+          'dragon-earth': 'dragon',
+          'dragon-air': 'dragon',
+          'dragon-hextech': 'dragon',
+          'dragon-chemtech': 'dragon',
+          'dragon-elder': 'dragon',
+          baron: 'baron',
+          herald: 'herald',
+          turret: 'turret',
+          'first-blood': 'firstBlood',
+          'double-kill': 'doubleKill',
+          'triple-kill': 'tripleKill',
+          'quadra-kill': 'quadraKill',
+          'penta-kill': 'pentaKill',
+          kill: 'kill',
+          death: 'death',
+          assist: 'assist',
+          'enemy-dragon': 'enemyBad',
+        };
+        window.playLoLSound(keyMap[pvEventKind] || 'dragon', buildSoundConfigPayload(), 'preview');
+      });
+    });
+
+    cfgIconSize.addEventListener('input', () => {
+      cfgIconSizeLabel.textContent = `${cfgIconSize.value}px`;
+      playItemPreview(false);
+    });
+
+    cfgEventIconSize.addEventListener('input', () => {
+      cfgEventIconSizeLabel.textContent = `${cfgEventIconSize.value}px`;
+      playEventPreview(false);
+    });
+
+    [cfgDisplayMode, cfgIconSize, cfgEntryAnim, cfgExitAnim, cfgDuration].forEach((el) => {
+      el.addEventListener('change', () => {
+        playItemPreview(true);
+        void saveConfig();
+      });
+    });
+
+    [cfgEventDisplayMode, cfgEventIconSize, cfgEventEntryAnim, cfgEventExitAnim, cfgEventDuration].forEach((el) => {
+      el.addEventListener('change', () => {
+        playEventPreview(true);
+        void saveConfig();
+      });
+    });
+
+    playItemPreview(false);
+    playEventPreview(false);
+
+    for (const key of visibilityKeys) {
+      const el = document.getElementById(`vis-${key}`);
+      if (el) {
+        el.addEventListener('change', () => { void saveConfig(); });
+      }
+    }
+
+    async function refreshStatus() {
+      const res = await fetch('/api/state');
+      const data = await res.json();
+      currentMock = Boolean(data.mockMode);
+      const status = data.state?.status || 'OFFLINE';
+      statusBadge.textContent = status;
+      statusBadge.classList.toggle('online', status === 'IN_GAME');
+      statusBadge.classList.toggle('mock', status === 'MOCK');
+      toggleMockBtn.textContent = currentMock ? 'Desativar Modo Mock' : 'Ativar Modo Mock';
+
+      if (!loadedInitialConfig && data.config) {
+        fillConfigForm(data.config);
+        loadedInitialConfig = true;
+      }
+    }
+
+    toggleMockBtn.addEventListener('click', async () => {
+      await fetch('/api/mock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: !currentMock }),
+      });
+      await refreshStatus();
+    });
+
+    document.getElementById('buy-item-btn').addEventListener('click', async () => {
+      await fetch('/api/mock/buy-item', { method: 'POST' });
+      await refreshStatus();
+    });
+
+    document.getElementById('sell-item-btn').addEventListener('click', async () => {
+      await fetch('/api/mock/sell-item', { method: 'POST' });
+      await refreshStatus();
+    });
+
+    document.querySelectorAll('button[data-event]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        await fetch('/api/mock/event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ kind: btn.dataset.event }),
+        });
+        await refreshStatus();
+      });
+    });
+
+    refreshStatus();
+    setInterval(refreshStatus, 2000);
+  </script>
+</body>
+</html>
