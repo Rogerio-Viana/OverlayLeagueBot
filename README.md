@@ -90,11 +90,23 @@ npm run start:open
 
 ---
 
-## 📸 Adicionando Prints ao Repositório
+## 📸 Prints do Sistema
 
-Caso queira incluir capturas de tela da sua própria transmissão ou do painel no GitHub:
-1. Salve suas imagens em `docs/images/` (por exemplo, `docs/images/painel.png` e `docs/images/obs-overlay.png`).
-2. Referencie no markdown com `![Painel OverlayLeagueBot](./docs/images/painel.png)`.
+### Visão Geral & URLs do OBS
+Copie rapidamente as 4 URLs de Browser Source para montar o layout ideal no OBS Studio.
+![Visão Geral e URLs do OBS](./docs/images/01-visao-geral-urls.jpg)
+
+### Overlay Completo — Customização & Prévia ao Vivo
+Escolha entre 5 modelos de layout, ajuste escala, opacidade, bordas, tema de cores e veja tudo ao vivo antes de ir para a live.
+![Overlay Completo e Prévia ao Vivo](./docs/images/02-overlay-completo-previa.png)
+
+### Itens (Compra & Venda)
+Configure o formato de exibição, tamanho, animações de entrada/saída e teste na prévia interativa (inclusive venda em cinza + ouro ganho).
+![Configuração de Itens Compra e Venda](./docs/images/03-itens-compra-venda.jpg)
+
+### Áudio & Sons Personalizados
+Ative, ajuste o volume e envie áudios personalizados para compras, vendas, dragões, Barão, Arauto, torres, multikills e alertas de vantagem inimiga.
+![Configurações de Áudio e Sons](./docs/images/04-audio-sons.jpg)
 
 ---
 
