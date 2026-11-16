@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoL Item Comprado — OBS</title>
+  <link rel="stylesheet" href="/overlay.css" />
+  <style>
+    .item-toast-stage {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .item-toast-stage .item-toast {
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="item-toast-stage">
+    <div id="item-toast" class="item-toast icon-only hidden">
+      <div class="item-toast-icon-wrap">
+        <img id="item-toast-icon" class="item-toast-icon" src="" alt="Item" />
+        <span id="item-toast-gold" class="item-toast-gold hidden">+0g</span>
+      </div>
+      <div id="item-toast-text" class="event-text">
+        <div id="item-toast-label" class="item-toast-label">ITEM COMPRADO</div>
+        <div id="item-toast-name" class="item-toast-name"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/sound-player.js"></script>
+  <script src="/item-toast.js"></script>
+</body>
+</html>

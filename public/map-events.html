@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoL Eventos do Mapa — OBS</title>
+  <link rel="stylesheet" href="/overlay.css" />
+  <style>
+    .event-stage {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .event-stage .event-toast {
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="event-stage">
+    <div id="event-toast" class="event-toast hidden">
+      <div id="event-toast-icon" class="event-toast-icon"></div>
+      <div class="event-toast-text">
+        <div id="event-toast-title" class="event-title"></div>
+        <div id="event-toast-subtitle" class="event-subtitle"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/event-icons.js"></script>
+  <script src="/sound-player.js"></script>
+  <script src="/event-toast.js" data-category="map"></script>
+</body>
+</html>

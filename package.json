@@ -1,0 +1,25 @@
+{
+  "name": "overlay-league-bot",
+  "version": "0.1.0",
+  "description": "Local League of Legends Live Client Data bridge and OBS Browser Source overlay",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "start:open": "node dist/server.js --open",
+    "package": "powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.0",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
